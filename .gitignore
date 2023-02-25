@@ -1,0 +1,26 @@
+EventElevation/
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+event-elevation-client/.env
+
+# dependencies
+event-elevation-client/node_modules
+event-elevation-client/.pnp
+event-elevation-client/.pnp.js
+
+# testing
+event-elevation-client/coverage
+
+# production
+event-elevation-client/build
+
+# misc
+event-elevation-client/.DS_Store
+event-elevation-client/.env.local
+event-elevation-client/.env.development.local
+event-elevation-client/.env.test.local
+event-elevation-client/.env.production.local
+
+event-elevation-client/npm-debug.log*
+event-elevation-client/yarn-debug.log*
+event-elevation-client/yarn-error.log*
