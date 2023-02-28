@@ -6,9 +6,10 @@ import Footer from '../Footer/Footer'
 import Navbar from '../Navbar/Navbar'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHashtag, faCalendarAlt, faClock, faCalendarCheck, faLocationDot, faGlobe, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHashtag, faCalendarAlt, faClock, faCalendarCheck, faLocationDot, faGlobe, faUser,faShareNodes, faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
 // import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { toast } from 'react-toastify';
 
 
 function EventPage() {
@@ -57,7 +58,10 @@ function EventPage() {
             <div className="container">
                 <div className="row justify-content-center">
                     <div style={{ textAlign: 'left', marginTop: '45px' }} className="col-md-12">
-                        <h1>{event.name}</h1>
+                        <h1>{event.name}<a className='btn'  onClick={() => {
+                            navigator.clipboard.writeText(window.location.href);
+                            toast.info('Link Copied to Clipboard');
+                        }}><FontAwesomeIcon style={{height:'25px',backgroundColor:'#e1ebf7'}} icon={faShareFromSquare} /></a></h1>
                         <div className='col-10'>
                             {
                                 eventTags && eventTags.map((tag) => <span key={tag.id} className='badge mt-2 mx-1' style={{ backgroundColor: '#e1ebf7', color: '#1a91eb', fontSize: '15px' }}>{tag.name}</span>)
