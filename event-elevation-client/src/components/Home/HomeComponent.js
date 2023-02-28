@@ -7,27 +7,21 @@ import { BASE_URL } from '../../config';
 
 
 function HomeComponent() {
-  const [allEvents, setAllEvents] = useState();
-
+  const [allEvents, setAllEvents] = useState([]);
+  console.log('All Events : ', allEvents);
   useEffect(() => {
-    const fetchData = () => {
-      const result = async () => await axios(BASE_URL + '/api/EventDetails');
-      result().then((res) => {
-        setAllEvents(res.data);
-        console.log('All Events : ', allEvents);
-      });
-
-      // setAllEvents(result.data);
-      // console.log('All Events : ', allEvents);
+    const fetchData = async () => {
+      const res = await axios(BASE_URL + '/api/EventDetails');
+      // console.log(res);
+      setAllEvents(res.data);
     }
-    !allEvents && fetchData();
+    fetchData();
   },[]);
 
   return (
     <div>
       {/* <h1>Home</h1> */}
       <Navbar />
-      {console.log('return : ', allEvents)}
       <div className="container">
 
         <div className="row justify-content-center">
@@ -38,7 +32,7 @@ function HomeComponent() {
         </div>
         <div className="row justify-content-center">
           {
-            allEvents && allEvents.map((event) => <EventCard key={event.id} eventId={event.id} eventName={event.name} eventDescription={event.description} eventDate={event.startDate} totalHours={event.totalHours} />)
+            allEvents && allEvents.map((event) => <EventCard key={event.id} eventId={event.id} eventPoster={'https://miro.medium.com/max/450/1*E2GBhUH4dIkshPAg7SiB2w.png'} eventName={event.name} eventDescription={event.description} eventDate={event.startDate} totalHours={event.totalHours} />)
           }
           
         </div>
