@@ -32,7 +32,7 @@ function HomeComponent() {
         </div>
         <div className="row justify-content-center">
           {
-            allEvents && allEvents.map((event) => <EventCard key={event.id} eventId={event.id} eventPoster={'https://miro.medium.com/max/450/1*E2GBhUH4dIkshPAg7SiB2w.png'} eventName={event.name} eventDescription={event.description} eventDate={event.startDate} totalHours={event.totalHours} />)
+            allEvents && allEvents.map((event) => <EventCard key={event.id} eventId={event.id} eventPoster={'https://miro.medium.com/max/450/1*E2GBhUH4dIkshPAg7SiB2w.png'} eventName={event.name} eventDescription={event.description} eventStartDate={event.startDate} eventEndDate={event.endDate} />)
           }
           
         </div>

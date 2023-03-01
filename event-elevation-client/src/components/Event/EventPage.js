@@ -17,25 +17,12 @@ function EventPage() {
     // console.log('Event Id : ', eventId);
     const [event, setEvent] = useState({});
     const [eventTags, setEventTags] = useState([]);
-    const [endTime, setEndTime] = useState();
-    function getEndDate(startDate, startTime, durationHours) {
-        const endTime = new Date(
-            startDate.slice(0, 4),
-            startDate.slice(5, 7),
-            startDate.slice(8, 10),
-            startTime.slice(0, 2) + durationHours,
-            startTime.slice(3, 5)
-        );
-        // console.log(endTime.toTimeString())
-        return endTime;
-    }
+    
 
     useEffect(() => {
         const fetchData = async () => {
             await axios.get(BASE_URL + '/api/EventDetails/' + eventId).then(res => {
                 setEvent(res.data);
-                let et = getEndDate(res.data.startDate, res.data.startTime, res.data.totalHours);
-                setEndTime(et);
                 console.log('Event : ', res.data);
                 return res;
             }).catch(error => {
@@ -104,11 +91,11 @@ function EventPage() {
                                 <div className="event-schedule-item">
                                     <div className="schedule-date">
                                         <FontAwesomeIcon icon={faCalendarAlt} />
-                                        <span> {endTime && endTime.toLocaleDateString()}</span>
+                                        <span> {event.endDate && event.endDate.slice(0, 10)}</span>
                                     </div>
                                     <div className="schedule-time">
                                         <FontAwesomeIcon icon={faClock} />
-                                        <span> {endTime && endTime.toTimeString()}</span>
+                                        <span> {event.endTime}</span>
                                     </div>
                                 </div>
                             </div>
