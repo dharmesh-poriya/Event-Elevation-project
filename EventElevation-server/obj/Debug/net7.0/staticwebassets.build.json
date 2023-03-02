@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "GceF1VOAKQQd46uedeMmp9xek/+cqcfH02uaWcEkj+A=",
+  "Source": "Event-Elevation-server",
+  "BasePath": "_content/Event-Elevation-server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
