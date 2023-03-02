@@ -1,0 +1,15 @@
+input[type="date"]:not(.has-value):before{
+    color: grey;
+    content: attr(placeholder);
+    margin-right:10px;
+  }
+  input[type="time"]:not(.has-value):before{
+    color: grey;
+    content: attr(placeholder);
+    margin-right:10px;
+  }
+  input[type="file"]:not(.has-value):before{
+    color: grey;
+    content: attr(placeholder);
+    margin-right:20px;
+  }

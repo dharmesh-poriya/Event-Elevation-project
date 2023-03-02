@@ -4,6 +4,7 @@ import Footer from '../Footer/Footer';
 import Navbar from '../Navbar/Navbar';
 import axios from 'axios';
 import { BASE_URL } from '../../config';
+import CreateEventModel from '../Event/CreateEventModel';
 
 
 function HomeComponent() {
@@ -16,14 +17,19 @@ function HomeComponent() {
       setAllEvents(res.data);
     }
     fetchData();
-  },[]);
+  }, []);
 
   return (
     <div>
       {/* <h1>Home</h1> */}
       <Navbar />
       <div className="container">
-
+        <div className="row justify-content-center">
+          <div className="col-lg-2 col-md-3 col-sm-4 offset-lg-10 offset-md-9 offset-sm-8 mt-4">
+            <button className="col-12 btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEventModel">Create Event</button>
+            <CreateEventModel />
+          </div>
+        </div>
         <div className="row justify-content-center">
           <div style={{ textAlign: 'left', marginTop: '45px' }} className="col-md-12">
             <h1>Happening Now!</h1>
@@ -32,9 +38,9 @@ function HomeComponent() {
         </div>
         <div className="row justify-content-center">
           {
-            allEvents && allEvents.map((event) => <EventCard key={event.id} eventId={event.id} eventPoster={'https://miro.medium.com/max/450/1*E2GBhUH4dIkshPAg7SiB2w.png'} eventName={event.name} eventDescription={event.description} eventStartDate={event.startDate} eventEndDate={event.endDate} />)
+            allEvents && allEvents.map((event) => <EventCard key={event.id} eventId={event.id} eventPoster={BASE_URL+'/api/EventDetails/event-poster/'+event.image} eventName={event.name} eventDescription={event.description} eventStartDate={event.startDate} eventEndDate={event.endDate} />)
           }
-          
+
         </div>
 
       </div>

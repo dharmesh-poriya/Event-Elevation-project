@@ -14,7 +14,7 @@ const EventCard = ({ eventId, eventName, eventPoster, eventDescription, eventSta
         <li className="list-group-item">start date : {(eventStartDate.slice(0, 10))}</li>
         <li className="list-group-item">end date : {eventEndDate.slice(0, 10)}</li>
       </ul>
-      <a href={`/eventDetails/${eventId}`} className="col-12 btn btn-primary">View More</a>
+      <a href={`/eventDetails/${eventId}`} className="col-12 btn btn-primary my-2">View More</a>
     </div>
   );
 };
