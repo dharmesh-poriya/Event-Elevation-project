@@ -15,7 +15,8 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomeComponent />} />
+          <Route exact path="/" element={<HomeComponent />} />
+          <Route path="/home" element={<HomeComponent />} />
           <Route path="/allevents" element={<AllEvents />} />
           <Route path="/eventDetails/:eventId" element={<EventPage />} />
           <Route path="/test" element={<TestComponent />} />

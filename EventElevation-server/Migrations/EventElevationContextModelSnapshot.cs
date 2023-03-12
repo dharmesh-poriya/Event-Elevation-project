@@ -71,28 +71,13 @@ namespace EventElevation.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(2000)");
+
                     b.HasKey("Id");
 
                     b.ToTable("EventDetails");
-                });
-
-            modelBuilder.Entity("EventElevation.Models.EventsTags", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("EventId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TagId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("eventsTags");
                 });
 
             modelBuilder.Entity("EventElevation.Models.Sponsor", b =>
@@ -124,7 +109,7 @@ namespace EventElevation.Migrations
                     b.ToTable("Sponsor");
                 });
 
-            modelBuilder.Entity("EventElevation.Models.Tag", b =>
+            modelBuilder.Entity("EventElevation.Models.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,13 +117,24 @@ namespace EventElevation.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RegisteredDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("EventElevation.Models.Sponsor", b =>

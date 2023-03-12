@@ -60,7 +60,18 @@ namespace EventElevation.Controllers
             {
                 return BadRequest();
             }
+            if (eventDetails.ImageFile != null)
+            {
+                var imageName = Guid.NewGuid().ToString() + Path.GetExtension(eventDetails.ImageFile.FileName);
+                var imagePathOnDisk = Path.Combine("./", "images/eventPosters", imageName);
 
+                using (var stream = new FileStream(imagePathOnDisk, FileMode.Create))
+                {
+                    await eventDetails.ImageFile.CopyToAsync(stream);
+                }
+
+                eventDetails.Image = imageName;
+            }
             _context.Entry(eventDetails).State = EntityState.Modified;
 
             try
@@ -84,18 +95,18 @@ namespace EventElevation.Controllers
 
         // POST: api/EventDetails
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<EventDetails>> PostEventDetails(EventDetails eventDetails)
-        {
-            if (_context.EventDetails == null)
-            {
-                return Problem("Entity set 'EventElevationContext.EventDetails'  is null.");
-            }
-            _context.EventDetails.Add(eventDetails);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<EventDetails>> PostEventDetails(EventDetails eventDetails)
+        //{
+        //    if (_context.EventDetails == null)
+        //    {
+        //        return Problem("Entity set 'EventElevationContext.EventDetails'  is null.");
+        //    }
+        //    _context.EventDetails.Add(eventDetails);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEventDetails", new { id = eventDetails.Id }, eventDetails);
-        }
+        //    return CreatedAtAction("GetEventDetails", new { id = eventDetails.Id }, eventDetails);
+        //}
 
         // DELETE: api/EventDetails/5
         [HttpDelete("{id}")]
@@ -182,7 +193,7 @@ namespace EventElevation.Controllers
                 {
                     // Save the image to disk and update the ImagePath property
                     var imageName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFile.FileName);
-                    var imagePathOnDisk = Path.Combine("./","images/eventPosters", imageName);
+                    var imagePathOnDisk = Path.Combine("./", "images/eventPosters", imageName);
 
                     using (var stream = new FileStream(imagePathOnDisk, FileMode.Create))
                     {

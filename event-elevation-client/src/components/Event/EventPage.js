@@ -6,12 +6,11 @@ import Footer from '../Footer/Footer'
 import Navbar from '../Navbar/Navbar'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHashtag, faCalendarAlt, faClock, faCalendarCheck, faLocationDot, faGlobe, faUser, faShareNodes, faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faHashtag, faCalendarAlt, faClock, faCalendarCheck, faLocationDot, faGlobe, faUser, faShareNodes, faShareFromSquare, faUserClock } from '@fortawesome/free-solid-svg-icons';
 // import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from 'react-toastify';
 import EditEventModel from './EditEventModel';
-import AddTags from './AddTags';
 
 
 function EventPage() {
@@ -20,11 +19,41 @@ function EventPage() {
     const [event, setEvent] = useState({});
     const [eventTags, setEventTags] = useState([]);
 
+    function getHours(stdate, sttime, eddate, edtime) {
+        if (stdate && sttime && eddate && edtime) {
+
+            // Starting date and time
+            var start_date = stdate.slice(0, 10);
+            var start_time = sttime;
+
+            // Ending date and time
+            var end_date = eddate.slice(0, 10);
+            var end_time = edtime;
+
+            // Convert dates and times to timestamps
+            var start_timestamp = new Date(start_date + " " + start_time).getTime();
+            var end_timestamp = new Date(end_date + " " + end_time).getTime();
+
+            // Calculate difference in milliseconds
+            var difference_ms = end_timestamp - start_timestamp;
+
+            // Convert milliseconds to hours
+            var hours = difference_ms / 3600000;
+            // let q = String(hours).split('.');
+            // if(q.length===2){
+            //     return `${q[0]} hours and ${(parseInt(q[1])*60)/100} Minutes`
+            // }
+            return `${hours} hours`;
+        }
+    }
 
     useEffect(() => {
         const fetchData = async () => {
             await axios.get(BASE_URL + '/api/EventDetails/' + eventId).then(res => {
                 setEvent(res.data);
+                let _tags = res.data.tags;
+                _tags = _tags.split(',');
+                setEventTags(_tags);
                 console.log('Event : ', res.data);
                 return res;
             }).catch(error => {
@@ -34,29 +63,16 @@ function EventPage() {
                     return;
                 }
             });
-            const resTags = await axios.get(BASE_URL + '/api/EventsTags/event/' + eventId);
-            setEventTags(resTags.data);
-            console.log('Event tags : ', resTags.data);
+            // const resTags = await axios.get(BASE_URL + '/api/EventsTags/event/' + eventId);
+            // setEventTags(resTags.data);
+            console.log('Event tags : ', eventTags);
         }
         fetchData();
     }, [])
-    
+
+
     const deleteCurrentEvent = async () => {
         if (event) {
-            await axios.get(BASE_URL + '/api/EventsTags/event/' + event.id)
-                .then(res => {
-                    res.data.map(async (eventTags) => {
-                        await axios.delete(BASE_URL + '/api/EventsTags/' + eventTags.id)
-                            .then(res => {
-                                console.log('Event Tags Deleted');
-                            }).catch(error => {
-                                console.log('Error in deleting event tags');
-                            })
-                    })
-                }).catch(error => {
-                    console.log('ERROR FETCHING EVENT TAGS : ', error.message);
-                });
-
             axios.delete(BASE_URL + '/api/EventDetails/' + event.id)
                 .then(res => {
                     toast.success('Event Deleted');
@@ -85,22 +101,18 @@ function EventPage() {
                         }}><FontAwesomeIcon style={{ height: '25px', backgroundColor: '#e1ebf7' }} icon={faShareFromSquare} /></a></h1>
                         <div className='col-10'>
                             {
-                                eventTags && eventTags.map((tag) => <span key={tag.id} className='badge mt-2 mx-1' style={{ backgroundColor: '#e1ebf7', color: '#1a91eb', fontSize: '15px' }}>{tag.name}</span>)
+                                eventTags && eventTags.map((tag) => <span key={tag} className='badge mt-2 mx-1' style={{ backgroundColor: '#e1ebf7', color: '#1a91eb', fontSize: '15px' }}>{tag}</span>)
                             }
                         </div>
                         <hr />
-                        <div className='col-12'>
-                            <button className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addTagsModal" style={{width:'90px',height:'28px',padding:0,margin:0}}>Add tags</button>
-                            <AddTags />
-                        </div>
                     </div>
                     <div className='row'>
-                        <div className="col-lg-2 col-md-3 col-sm-4 mt-4">
+                        <div className="col-lg-2 col-md-3 col-sm-4 mt-1">
                             <button className="col-12 btn btn-success" data-bs-toggle="modal" data-bs-target="#editEventModel">Edit Event</button>
-                            
-                            <EditEventModel currentEvent={event}/>
+
+                            <EditEventModel currentEvent={event} />
                         </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4 offset-lg-8 offset-md-6 offset-sm-4 mt-4">
+                        <div className="col-lg-2 col-md-3 col-sm-4 offset-lg-8 offset-md-6 offset-sm-4 mt-1">
                             <button className="col-12 btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEventModel">Delete Event</button>
 
                             <div className="modal fade" id="deleteEventModel" tabIndex="-1" aria-labelledby="deleteEventLabel" aria-hidden="true">
@@ -140,6 +152,7 @@ function EventPage() {
                     <div style={{ textAlign: 'left' }} className="col-12">
                         <h4><FontAwesomeIcon icon={faHashtag} /> Date and Time</h4>
                         <div className='mx-sm-5 mt-3 mx-2'>
+                            <div className="my-2"><h6><FontAwesomeIcon icon={faUserClock} /> Total Hours : {getHours(event.startDate, event.startTime, event.endDate, event.endTime)}</h6></div>
                             <div><h6><FontAwesomeIcon icon={faCalendarCheck} /> Starting Date and Time</h6></div>
                             <div className="event-schedule-container mx-4">
                                 <div className="event-schedule-item">

@@ -9,7 +9,8 @@ namespace EventElevation.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        
+        [Column(TypeName = "nvarchar(2000)")]
+        public string tags { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
 

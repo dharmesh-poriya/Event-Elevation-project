@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventElevation.Migrations
 {
     /// <inheritdoc />
-    public partial class initil : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,6 +20,7 @@ namespace EventElevation.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tags = table.Column<string>(type: "nvarchar(2000)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "date", nullable: false),
                     StartTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: false),
@@ -35,30 +36,19 @@ namespace EventElevation.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "eventsTags",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EventId = table.Column<long>(type: "bigint", nullable: false),
-                    TagId = table.Column<long>(type: "bigint", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegisteredDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_eventsTags", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tag",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tag", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,13 +83,10 @@ namespace EventElevation.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "eventsTags");
-
-            migrationBuilder.DropTable(
                 name: "Sponsor");
 
             migrationBuilder.DropTable(
-                name: "Tag");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "EventDetails");

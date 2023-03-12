@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "GceF1VOAKQQd46uedeMmp9xek/+cqcfH02uaWcEkj+A=",
-  "Source": "Event-Elevation-server",
-  "BasePath": "_content/Event-Elevation-server",
+  "Hash": "FPL0lNpNbImzcwA48y8l+6bIg/adswyUwlWKiaYVmlQ=",
+  "Source": "EventElevation",
+  "BasePath": "_content/EventElevation",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

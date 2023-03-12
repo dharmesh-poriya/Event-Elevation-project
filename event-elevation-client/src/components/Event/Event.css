@@ -1,15 +1,78 @@
-input[type="date"]:not(.has-value):before{
-    color: grey;
-    content: attr(placeholder);
-    margin-right:10px;
-  }
-  input[type="time"]:not(.has-value):before{
-    color: grey;
-    content: attr(placeholder);
-    margin-right:10px;
-  }
-  input[type="file"]:not(.has-value):before{
-    color: grey;
-    content: attr(placeholder);
-    margin-right:20px;
-  }
+input[type="date"]:not(.has-value):before {
+  color: grey;
+  content: attr(placeholder);
+  margin-right: 10px;
+}
+
+input[type="time"]:not(.has-value):before {
+  color: grey;
+  content: attr(placeholder);
+  margin-right: 10px;
+}
+
+input[type="file"]:not(.has-value):before {
+  color: grey;
+  content: attr(placeholder);
+  margin-right: 20px;
+}
+
+/* react tags style start */
+.ReactTags {
+  flex-wrap: wrap;
+  
+  align-items: flex-start;
+  padding: 5px;
+  /* border: 1px solid #ccc; */
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ReactTags__tag {
+  display: inline-flex;
+  align-items: center;
+  margin: 2px;
+  padding: 2px 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ReactTags__tag__text {
+  margin-right: 5px;
+}
+
+.ReactTags__remove {
+  margin-left: 5px;
+  margin-bottom: 4px;
+  color: #a9aaae;
+  font-size: 20px;
+  cursor: pointer;
+  border: 0px
+}
+
+.react-tags__suggestions {
+  position: absolute;
+  z-index: 1;
+  margin-top: 8px;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  padding: 0;
+}
+
+.react-tags__suggestion {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.react-tags__suggestion--active {
+  background-color: #eee;
+}
+
+/* react tags style end */

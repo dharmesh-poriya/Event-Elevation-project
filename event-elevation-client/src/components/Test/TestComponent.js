@@ -280,43 +280,91 @@ const TestComponent = () => {
 export default TestComponent;
 */
 
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+// import './react-tags.css';
+// import { WithContext as ReactTags } from 'react-tag-input';
+// const KeyCodes = {
+//   comma: 188,
+//   enter: 13
+// };
+
+// const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
+// const TestComponent = () => {
+//   const [tags, setTags] = useState([]);
+
+//   const handleDelete = i => {
+//     setTags(tags.filter((tag, index) => index !== i));
+//   };
+
+//   const handleAddition = tag => {
+//     setTags([...tags, tag]);
+//   };
+
+//   const handleDrag = (tag, currPos, newPos) => {
+//     const newTags = tags.slice();
+
+//     newTags.splice(currPos, 1);
+//     newTags.splice(newPos, 0, tag);
+
+//     // re-render
+//     setTags(newTags);
+//   };
+
+//   // const handleTagClick = index => {
+//   //   console.log('The tag at index ' + index + ' was clicked');
+//   // };
+
+//   return (
+//     <div className="app">
+//       <h1> React Tags Example </h1>
+//       <div>
+//         <ReactTags
+//           tags={tags}
+//           className='btn primary'
+//           delimiters={delimiters}
+//           handleDelete={handleDelete}
+//           handleAddition={handleAddition}
+//           handleDrag={handleDrag}
+//           // handleTagClick={handleTagClick}
+//           inputFieldPosition="bottom"
+//           autocomplete
+//           classNames={{
+//             tags: 'ReactTags',
+//             remove: 'ReactTags__remove',
+//             suggestions: 'tags__suggestions'
+
+//           }}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default TestComponent;
+
+
+
+import React from 'react';
+import { useCookies } from 'react-cookie';
 
 function TestComponent() {
-  const [selectedChoices, setSelectedChoices] = useState([]);
+  const [cookies, setCookie, removeCookie] = useCookies(['testCookie']);
 
-  const choices = [
-    { id: 1, label: 'Choice 1' },
-    { id: 2, label: 'Choice 2' },
-    { id: 3, label: 'Choice 3' },
-  ];
-
-  const handleChoiceChange = (e) => {
-    const choiceId = parseInt(e.target.value);
-    if (e.target.checked) {
-      setSelectedChoices([...selectedChoices, choiceId]);
-    } else {
-      setSelectedChoices(selectedChoices.filter(id => id !== choiceId));
-    }
+  const handleClick = () => {
+    const expires = new Date(Date.now() + 60 * 60 * 1000); // Expires in 1 hour
+    setCookie('testCookie', 'Hello From Dharmesh!', { path: '/', expires });
   };
-
+  const handleRemove = () => {
+    removeCookie('testCookie', { path: '/' });
+  };
   return (
     <div>
-      {choices.map((choice) => (
-        <label key={choice.id}>
-          <input
-            type="checkbox"
-            value={choice.id}
-            checked={selectedChoices.includes(choice.id)}
-            onChange={handleChoiceChange}
-          />
-          {choice.label}
-        </label>
-      ))}
-      <p>Selected Choices: {JSON.stringify(selectedChoices)}</p>
+      <h1>Current Cookie : {cookies['testCookie']}</h1>
+      <button onClick={handleClick}>Set Cookie</button>
+      <button onClick={handleRemove}>Remove Cookie</button>
     </div>
   );
 }
 
 export default TestComponent;
-
